@@ -5,6 +5,8 @@ using RulesEngine.Models;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using static RulesEngine.Extensions.ListofRuleResultTreeExtension;
 
 namespace DemoApp
@@ -27,11 +29,15 @@ namespace DemoApp
             rule.Expression = "count < 3";
             rule.RuleExpressionType = RuleExpressionType.LambdaExpression;
 
+            //(rule.Actions ??= new RuleActions()).OnSuccess = new ActionInfo() { Name = "123", Context = new Dictionary<string, object>() };
+
             rules.Add(rule);
 
             workflow.Rules = rules;
 
             workflows.Add(workflow);
+
+            //var json = JsonSerializer.Serialize(workflow);
 
             var bre = new RulesEngine.RulesEngine(workflows.ToArray(), null);
 
