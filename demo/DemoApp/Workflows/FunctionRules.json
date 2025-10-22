@@ -18,12 +18,31 @@
       {
         "RuleName": "MaskUserPhone",
         "ErrorMessage": "手机号脱敏失败",
-        "Expression": "StringUtils.MaskString(input1.Phone, 2, 2) == \"131*******00\"",
+        "Expression": "StringUtils.MaskString(input1.Phone, 2, 2) == \"13*******00\"",
         "Actions": {
           "OnSuccess": {
             "Name": "OutputExpression",
             "Context": {
-              "Expression": "input2"
+              "Expression": "StringUtils.MethodOnOutput(input2)"
+            }
+          },
+          "OnFailure": {
+            "Name": "OutputExpression",
+            "Context": {
+              "Expression": "input1"
+            }
+          }
+        }
+      },
+      {
+        "RuleName": "PropertyCheckRule",
+        "ErrorMessage": "Properties匹配失败",
+        "Expression": "input1.Properties.ContainsKey(\"Key1\")",
+        "Actions": {
+          "OnSuccess": {
+            "Name": "OutputExpression",
+            "Context": {
+              "Expression": "StringUtils.MethodOnOutput(input2)"
             }
           },
           "OnFailure": {

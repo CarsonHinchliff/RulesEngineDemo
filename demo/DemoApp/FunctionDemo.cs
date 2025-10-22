@@ -34,6 +34,11 @@ namespace DemoApp
                    new string('*', input.Length - keepStart - keepEnd) +
                    input.Substring(input.Length - keepEnd);
         }
+
+        public static string MethodOnOutput(UserOutput output)
+        {
+            return Guid.NewGuid().ToString();
+        }
     }
     public class FunctionDemo
     {
@@ -59,7 +64,11 @@ namespace DemoApp
             // 准备输入数据
             var input = new UserInput {
                 Email = "test@example.com",
-                Phone = "13800138000"
+                Phone = "13800138000",
+                Properties = new Dictionary<string, object> {
+                    { "Key1", 1 },
+                    { "Key2", "abc" }
+                }
             };
 
             // 执行规则
@@ -84,6 +93,8 @@ namespace DemoApp
     {
         public string Email { get; set; }
         public string Phone { get; set; }
+
+        public Dictionary<string, object> Properties { get; set; } = new();
     }
 
     // 定义输出模型
@@ -92,5 +103,7 @@ namespace DemoApp
         public bool IsValid { get; set; }
         public string Message { get; set; }
         public string MaskedPhone { get; set; }
+
+        public Dictionary<string, object> Properties { get; set; } = new();
     }
 }
